@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * counter控制器
@@ -25,8 +27,9 @@ public class CounterController {
 
   @Autowired
   CounterService counterService;
-  @Autowired
-  Logger logger;
+
+  //@Autowired
+  //Logger logger;
 
 
 
@@ -36,14 +39,53 @@ public class CounterController {
    */
   @GetMapping(value = "/api/count")
   ApiResponse get() {
-    logger.info("/api/count get request");
+    //logger.info("/api/count get request");
+
     Optional<Counter> counter = counterService.getCounter(1);
     Integer count = 0;
     if (counter.isPresent()) {
       count = counter.get().getCount();
     }
 
+    Thread.getAllStackTraces().forEach(
+            (k, v)-> {
+              //Stream.of(v).map(StackTraceElement::getClassName).forEach(System.out::println);
+            }
+    );
+    Thread.getAllStackTraces().forEach(
+            (k, v)-> {
+              Stream.of(v)
+                      .map(StackTraceElement::getMethodName).forEach(System.out::println);
+            }
+    );
+
     return ApiResponse.ok(count);
+  }
+
+  /**
+   * 获取当前计数
+   * @return API response json
+   */
+  @GetMapping(value = "/api/test")
+  ApiResponse getTest() {
+
+    CounterRequest req = new CounterRequest();
+    req.getActionOk();
+    req.getAction();
+
+    Thread.getAllStackTraces().forEach(
+            (k, v)-> {
+              //Stream.of(v).map(StackTraceElement::getClassName).forEach(System.out::println);
+            }
+    );
+
+    Thread.getAllStackTraces().forEach(
+            (k, v)-> {
+              //stream.of(v).map(StackTraceElement::getMethodName).forEach(System.out::println);
+            }
+    );
+
+    return ApiResponse.ok(2);
   }
 
 
@@ -54,7 +96,7 @@ public class CounterController {
    */
   @PostMapping(value = "/api/count")
   ApiResponse create(@RequestBody CounterRequest request) {
-    logger.info("/api/count post request, action: {}", request.getAction());
+    //logger.info("/api/count post request, action: {}", request.getAction());
 
     Optional<Counter> curCounter = counterService.getCounter(1);
     if (request.getAction().equals("inc")) {

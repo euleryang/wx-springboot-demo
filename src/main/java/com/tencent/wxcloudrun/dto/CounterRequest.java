@@ -10,4 +10,14 @@ public class CounterRequest {
   // 等于 `"clear"` 时，表示计数重置（清零）
   private String action;
 
+
+  public String getActionOk() {
+    return "getActionOk";
+  }
+
+  public String getAction() {
+    CounterResponse response = new CounterResponse();
+    response.getActionResponse();
+    return "response.getActionResponse()";
+  }
 }

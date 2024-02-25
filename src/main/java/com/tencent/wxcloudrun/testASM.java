@@ -33,6 +33,7 @@ public class testASM {
 
     ClassReader classReader = new ClassReader(CounterController.class.getName());
     ClassVisitor classVisitor = new ClassVisitor(Opcodes.ASM5) {
+
       @Override
       public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         //System.out.println("method: " + name + " declares " + descriptor);
